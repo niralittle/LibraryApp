@@ -8,41 +8,29 @@ import shared.model.vo.EntityWithId;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.*;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
- * Created by niralittle on 26.10.2014.
+ * Created by niralittle on 28.10.2014.
  */
-public class BookDAOImpl implements DAO {
+public class OrderEntryDAOImpl implements DAO {
 
     @Override
     public EntityWithId findById(int id) {
-        String query = "SELECT * FROM TABLE BOOK WHERE ID = " + id;
-        try {
-            Statement statement = DBManager.getConnection().prepareStatement(query);
-            ResultSet rs = statement.executeQuery(query);
-            if (rs.next()) {
-                Book b = new Book();
-                b.setId(rs.getInt(1));
-                b.setTitle(rs.getString(2));
-                b.setAuthors(rs.getString(3));
-                b.setDescription(rs.getString(4));
-                b.setRating(rs.getInt(5));
-                b.setNumberOfPages(rs.getInt(6));
-                b.setCategory(rs.getString(7));
-                return b;
-            }
-            return null;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return null;
     }
 
+    @Override
     public List<EntityWithId> getByQuery(int page, int size, Map<String, String> params) {
+        return null;
+    }
+
+    public OrderEntryDAOImpl(EntityWithId e) {
         StringBuilder query = new StringBuilder();
-        query.append("\t SELECT * \n\t FROM ");
-        query.append(params.get("from") + " WHERE ");
+        query.append("\t INSERT * \n\t INTO TABLE ORDER_ENTRY( ");
 
         if (params != null && !params.isEmpty()) {
             query.append(" WHERE ");
@@ -79,7 +67,6 @@ public class BookDAOImpl implements DAO {
             System.out.println("SQL Error: " + se);
             return Collections.EMPTY_LIST;
         }
+
     }
-
-
 }

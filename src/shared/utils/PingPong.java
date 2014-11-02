@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public abstract class PingPong implements Serializable{
 
-    private Map<String, String> params;
+    private Map<String, Object> params;
 
     public PingPong() {}
 
@@ -17,9 +17,9 @@ public abstract class PingPong implements Serializable{
         this.params = params;
     }
 
-    public void addParams(String name, String value) {
+    public void addParams(String name, Object value) {
         if (params == null) {
-            params = new HashMap<String, String>();
+            params = new HashMap<String, Object>();
         }
         params.put(name, value);
     }

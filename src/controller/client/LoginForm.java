@@ -9,7 +9,7 @@ import java.io.IOException;
  * Created by niralittle on 26.10.2014.
  */
 
-public class Login {
+public class LoginForm {
 
     private static final String WRONG_CREDENTIALS = "Unsuccessful, please check credentials";
     private static final String EMPTY_FIELDS = "Fill all the blanks to proceed";

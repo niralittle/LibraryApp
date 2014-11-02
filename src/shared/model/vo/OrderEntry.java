@@ -1,13 +1,14 @@
 package shared.model.vo;
 
 import java.sql.Date;
+import java.util.List;
 
 /**
  * Created by Катерина on 26.10.2014.
  */
 public class OrderEntry extends EntityWithId {
 
-    public enum OEStates {
+    public static enum OEStates {
 
         FRESH(1),
         COMPLETED(2),
@@ -28,6 +29,8 @@ public class OrderEntry extends EntityWithId {
     private Date waitingSince;
     private Date dueDate;
     private int status;
+    private List<Book> books;
+    private int userId;
 
     public OrderEntry(int id, Date waitingSince, Date dueDate, int status) {
         super(id);
@@ -60,5 +63,21 @@ public class OrderEntry extends EntityWithId {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 }

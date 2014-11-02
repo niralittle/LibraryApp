@@ -15,10 +15,12 @@ public class SecurityCheckOnClient {
     static class Result {
         private boolean checkPassed;
         private boolean isAdmin;
+        private int userID;
 
-        public Result(boolean check, boolean isAdmin) {
+        public Result(boolean check, boolean isAdmin, int userID ) {
             this.checkPassed = check;
             this.isAdmin = isAdmin;
+            this.userID = userID;
         }
 
         public boolean isCheckPassed() {
@@ -27,6 +29,9 @@ public class SecurityCheckOnClient {
 
         public boolean isAdmin() {
             return isAdmin;
+        }
+        public int userId() {
+            return userID;
         }
     }
 }
