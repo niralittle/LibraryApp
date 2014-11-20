@@ -44,22 +44,23 @@ public class LoginForm {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String user = userText.getText();
-                String password = (passwordText.getPassword()).toString();
+                String password = new String(passwordText.getPassword());
                 if (isEmptyOrNull(user) || isEmptyOrNull(password)) {
                     notifyOfError(EMPTY_FIELDS);
                     return;
                 }
-                SecurityCheckOnClient.Result res = null;
+                SecurityCheckOnClient.Result res;
                 try {
                     res = SecurityCheckOnClient.ifUserExists(user, password);
+                    if (!res.isCheckPassed()) {
+                        panel.setVisible(false);
+                        return;
+                    }
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                if (!res.isCheckPassed()) {
-                    notifyOfError(WRONG_CREDENTIALS);
-                    return;
-                }
-                panel.setVisible(false);
+                notifyOfError(WRONG_CREDENTIALS);
             }
         });
         panel.add(loginButton);
@@ -72,5 +73,9 @@ public class LoginForm {
     private static void notifyOfError(String notification) {
         yellAtUser.setText("Fill all the blanks to proceed");
         yellAtUser.setVisible(true);
+    }
+
+    public static void main(String... args) {
+
     }
 }

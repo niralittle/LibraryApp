@@ -42,17 +42,17 @@ public class BookDAOImpl implements DAO {
     public List<EntityWithId> getByQuery(int page, int size, Map<String, String> params) {
         StringBuilder query = new StringBuilder();
         query.append("\t SELECT * \n\t FROM ");
-        query.append(params.get("from") + " WHERE ");
+        query.append(params.get("from")).append(" WHERE ");
 
-        if (params != null && !params.isEmpty()) {
+        if (!params.isEmpty()) {
             query.append(" WHERE ");
             boolean notFirst = false; //not adding " AND " before the first param
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 if (notFirst) query.append(" AND ");
                 if (entry.getValue() != null) {
-                    query.append(entry.getKey() + " LIKE ?");
+                    query.append(entry.getKey()).append(" LIKE ?");
                 } else {
-                    query.append(entry.getKey() + " IS NULL");
+                    query.append(entry.getKey()).append(" IS NULL");
                 }
                 notFirst = true;
             }

@@ -13,7 +13,7 @@ public abstract class PingPong implements Serializable{
 
     public PingPong() {}
 
-    public void setParams(Map params) {
+    public void setParams(Map<String, Object> params) {
         this.params = params;
     }
 
@@ -24,7 +24,7 @@ public abstract class PingPong implements Serializable{
         params.put(name, value);
     }
 
-    public Map getParams() {
+    public Map<String, Object> getParams() {
         return params;
     }
 

@@ -25,10 +25,6 @@ public class OrderEntryDAOImpl implements DAO {
 
     @Override
     public List<EntityWithId> getByQuery(int page, int size, Map<String, String> params) {
-        return null;
-    }
-
-    public OrderEntryDAOImpl(EntityWithId e) {
         StringBuilder query = new StringBuilder();
         query.append("\t INSERT * \n\t INTO TABLE ORDER_ENTRY( ");
 
@@ -38,9 +34,9 @@ public class OrderEntryDAOImpl implements DAO {
             for (Map.Entry<String, String> entry : params.entrySet()) {
                 if (notFirst) query.append(" AND ");
                 if (entry.getValue() != null) {
-                    query.append(entry.getKey() + " LIKE ?");
+                    query.append(entry.getKey()).append(" LIKE ?");
                 } else {
-                    query.append(entry.getKey() + " IS NULL");
+                    query.append(entry.getKey()).append(" IS NULL");
                 }
                 notFirst = true;
             }
@@ -67,6 +63,5 @@ public class OrderEntryDAOImpl implements DAO {
             System.out.println("SQL Error: " + se);
             return Collections.EMPTY_LIST;
         }
-
     }
 }
