@@ -59,7 +59,7 @@ public abstract class BookCatalog {
     }
 
     private static int getCurrentUserIdFromMainWindow() {
-        return MainWindow.getCurrentUserID();
+        return 0;
     }
 
 }
