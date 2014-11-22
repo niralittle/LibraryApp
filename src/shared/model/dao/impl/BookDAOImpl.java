@@ -3,7 +3,6 @@ package shared.model.dao.impl;
 import shared.model.DBManager;
 import shared.model.dao.DAO;
 import shared.model.vo.Book;
-import shared.model.vo.EntityWithId;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,10 +12,10 @@ import java.util.*;
 /**
  * Created by niralittle on 26.10.2014.
  */
-public class BookDAOImpl implements DAO {
+public class BookDAOImpl implements DAO<Book> {
 
     @Override
-    public EntityWithId findById(int id) {
+    public Book findById(int id) {
         String query = "SELECT * FROM TABLE BOOK WHERE ID = " + id;
         try {
             Statement statement = DBManager.getConnection().prepareStatement(query);
@@ -39,7 +38,7 @@ public class BookDAOImpl implements DAO {
         }
     }
 
-    public List<EntityWithId> getByQuery(int page, int size, Map<String, String> params) {
+    public List<Book> getByQuery(int page, int size, Map<String, String> params) {
         StringBuilder query = new StringBuilder();
         query.append("\t SELECT * \n\t FROM ");
         query.append(params.get("from")).append(" WHERE ");
@@ -61,7 +60,7 @@ public class BookDAOImpl implements DAO {
         try {
             Statement statement = DBManager.getConnection().prepareStatement(query.toString());
             rs = statement.executeQuery(query.toString());
-            List<EntityWithId> result = new LinkedList<EntityWithId>();
+            List<Book> result = new LinkedList<>();
             while (rs.next()) {
                 Book book = new Book();
                 book.setId(rs.getInt(1));

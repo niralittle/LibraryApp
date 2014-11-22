@@ -8,9 +8,9 @@ import java.util.Map;
 /**
  * Created by niralittle on 26.10.2014.
  */
-public interface DAO {
+public interface DAO <T> {
 
-    public abstract EntityWithId findById(int id);
+    public abstract T findById(int id);
 
-    public List<EntityWithId> getByQuery(int page, int size, Map<String, String> params);
+    public List<T> getByQuery(int page, int size, Map<String, String> params);
 }

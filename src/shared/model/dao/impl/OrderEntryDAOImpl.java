@@ -3,7 +3,7 @@ package shared.model.dao.impl;
 import shared.model.DBManager;
 import shared.model.dao.DAO;
 import shared.model.vo.Book;
-import shared.model.vo.EntityWithId;
+import shared.model.vo.OrderEntry;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,15 +16,14 @@ import java.util.Map;
 /**
  * Created by niralittle on 28.10.2014.
  */
-public class OrderEntryDAOImpl implements DAO {
+public class OrderEntryDAOImpl implements DAO<OrderEntry> {
 
-    @Override
-    public EntityWithId findById(int id) {
+    public OrderEntry findById(int id) {
         return null;
     }
 
-    @Override
-    public List<EntityWithId> getByQuery(int page, int size, Map<String, String> params) {
+    //TODO: WRONG!
+    public List<OrderEntry> getByQuery(int page, int size, Map<String, String> params) {
         StringBuilder query = new StringBuilder();
         query.append("\t INSERT * \n\t INTO TABLE ORDER_ENTRY( ");
 
@@ -45,7 +44,7 @@ public class OrderEntryDAOImpl implements DAO {
         try {
             Statement statement = DBManager.getConnection().prepareStatement(query.toString());
             rs = statement.executeQuery(query.toString());
-            List<EntityWithId> result = new LinkedList<EntityWithId>();
+            List<OrderEntry> result = new LinkedList<>();
             while (rs.next()) {
                 Book book = new Book();
                 book.setId(rs.getInt(1));
@@ -55,13 +54,13 @@ public class OrderEntryDAOImpl implements DAO {
                 book.setRating(rs.getInt(5));
                 book.setNumberOfPages(rs.getInt(6));
                 book.setCategory(rs.getString(7));
-                result.add(book);
+                //result.add(book);
             }
             statement.close();
             return result;
         } catch (SQLException se) {
             System.out.println("SQL Error: " + se);
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
     }
 }

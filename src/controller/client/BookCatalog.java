@@ -1,5 +1,7 @@
 package controller.client;
 
+import shared.model.dao.UserDAO;
+import shared.model.dao.impl.UserDAOImpl;
 import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 import shared.view.desktop.MainWindow;
@@ -21,12 +23,14 @@ public abstract class BookCatalog {
 
     public static final String GET_ALL_BOOKS = "getAllBooks";
 
+    private static final UserDAO USER_DAO = new UserDAOImpl();
 
-    public static void createOrder(List<Book> books, int userID) {
+
+    public static void createOrder(List<Book> books, String user) {
         OrderEntry oe = new OrderEntry();
-        oe.setStatus(OrderEntry.OEStates.FRESH.getId());
-        oe.setUserId(userID);
+        oe.setUserId(USER_DAO.getIdByName(user));
         oe.setBooks(books);
+
     }
 
     public static List<Book> getAllBooks() {
@@ -39,11 +43,15 @@ public abstract class BookCatalog {
             Book book1 = new Book();
             book1.setTitle("Title 1");
             book1.setAuthors("Author A.");
+            books.add(book1);
             Book book2 = new Book();
             book2.setTitle("Title 2");
             book2.setAuthors("Author B.");
-            books.add(book1);
             books.add(book2);
+            Book book3 = new Book();
+            book3.setTitle("Title 3");
+            book3.setAuthors("Author C.");
+            books.add(book3);
             return books;
         }
     }

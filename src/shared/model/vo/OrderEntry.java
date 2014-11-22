@@ -8,23 +8,6 @@ import java.util.List;
  */
 public class OrderEntry extends EntityWithId {
 
-    public static enum OEStates {
-
-        FRESH(1),
-        COMPLETED(2),
-        RECEIVED(3),
-        CANCELLED(4);
-
-        private int id;
-
-        OEStates(int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return this.id;
-        }
-    }
 
     private Date waitingSince;
     private Date dueDate;

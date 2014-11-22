@@ -10,6 +10,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -17,19 +19,22 @@ import java.util.List;
  */
 public abstract class MainWindow {
     private static JFrame view;
+    private static String USER;
     private static ActionListener loginListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
 
-            String user = userText.getText();
+            String username = userText.getText();
             String password = new String(passwordText.getPassword());
-            if (LoginController.verifyLoginPassword(user, password)) {
-                view.setVisible(false);
+            if (LoginController.verifyLoginPassword(username, password)) {
                 placeCatalogComponents();
+                USER = username;
             } else {
                 JOptionPane.showMessageDialog(view,
-                        "Username or password is not correct!",
-                        "Wrong credentials",
+                        (username.isEmpty() && password.isEmpty())
+                        ? "Fill all the blanks to proceed"
+                        : "Unsuccessful, please check credentials",
+                        "Error",
                         JOptionPane.ERROR_MESSAGE);
             }        }
     };
@@ -78,6 +83,9 @@ public abstract class MainWindow {
     }
 
     private static void placeCatalogComponents() {
+        final List<Book> books = BookCatalog.getAllBooks();
+
+        view.setVisible(false);
         view.getContentPane().removeAll();
         view.setSize(300, 500);
 
@@ -86,13 +94,12 @@ public abstract class MainWindow {
         view.setTitle("Book Catalog");
 
         panel.setLayout(new BorderLayout());
-        List<Book> books = BookCatalog.getAllBooks();
 
         String[] listData = new String[books.size()];
         for (int i = 0; i < listData.length; i++) {
             listData[i] = books.get(i).getTitle() + " (" + books.get(i).getAuthors() + ")";
         }
-        JList<String> list = new JList<>(listData);
+        final JList<String> list = new JList<>(listData);
 
         JScrollPane listPane = new JScrollPane(list);
 
@@ -107,9 +114,30 @@ public abstract class MainWindow {
 
         topHalf.setPreferredSize(new Dimension(100, 430));
         view.add(topHalf, BorderLayout.NORTH);
-        JButton sendButton = new JButton("Send");
+        JButton sendButton = new JButton("Send order for processing");
         sendButton.setBounds(10, 80, 80, 25);
-        //sendButton.addActionListener(sendListener);
+        sendButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                List<Book> orderedBooks = new ArrayList<>();
+                if (orderedBooks.isEmpty()) {
+                    JOptionPane.showMessageDialog(view,
+                            "Select at least one book.",
+                            "Warning",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    for (int index : list.getSelectedIndices()) {
+                        orderedBooks.add(books.get(index));
+                    }
+                    BookCatalog.createOrder(orderedBooks, USER);
+                    JOptionPane.showMessageDialog(view,
+                            "Order created.",
+                            "Order",
+                            JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            }
+        });
         panel.add(sendButton);
         JPanel bottomHalf = new JPanel(new BorderLayout());
         bottomHalf.setPreferredSize(new Dimension(450, 135));
