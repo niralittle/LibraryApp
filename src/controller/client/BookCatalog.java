@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -19,36 +20,17 @@ import java.util.Map;
 public abstract class BookCatalog {
 
     public static final String GET_ALL_BOOKS = "getAllBooks";
-    public static Order currentOrder;
 
-    public static class Order {
-        private List<Book> books;
 
-        public Order() {
-            books = new ArrayList<Book>();
-        }
-
-        public void addToOrder(List<Book> b) {
-            if (currentOrder == null) {
-                startNewOrder();
-            }
-            books.addAll(b);
-        }
-
-        public List<Book> getSelectedBooks() {
-            return books;
-        }
-    }
-
-    private static void sendOrderToProcessing() {
+    public static void createOrder(List<Book> books, int userID) {
         OrderEntry oe = new OrderEntry();
         oe.setStatus(OrderEntry.OEStates.FRESH.getId());
-        oe.setUserId(getCurrentUserIdFromMainWindow());
-        oe.setBooks(currentOrder.getSelectedBooks());
+        oe.setUserId(userID);
+        oe.setBooks(books);
     }
 
     public static List<Book> getAllBooks() {
-        Map<String, Object> request = new HashMap<String, Object>();
+        Map<String, Object> request = new HashMap<>();
         request.put("method", GET_ALL_BOOKS);
         try {
             return (List<Book>) ConnectionEstablisher.retrieveOnRequest(request).getParams().get("methodResult");
@@ -66,16 +48,5 @@ public abstract class BookCatalog {
         }
     }
 
-    public static void startNewOrder() {
-        currentOrder = new Order();
-    }
-
-    public static void cancelOrder() {
-        currentOrder.getSelectedBooks().clear();
-    }
-
-    private static int getCurrentUserIdFromMainWindow() {
-        return 0;
-    }
 
 }
