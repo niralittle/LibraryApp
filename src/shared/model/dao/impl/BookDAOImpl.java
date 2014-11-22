@@ -77,7 +77,7 @@ public class BookDAOImpl implements DAO {
             return result;
         } catch (SQLException se) {
             System.out.println("SQL Error: " + se);
-            return Collections.EMPTY_LIST;
+            return Collections.emptyList();
         }
     }
 
