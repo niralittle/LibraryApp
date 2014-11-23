@@ -5,6 +5,6 @@ import shared.model.vo.User;
 
 public class LoginController {
     public static User getUserObject(String login) {
-        return new UserDAOImpl().getUserByName(login);
+        return new UserDAOImpl().getUserByLogin(login);
     }
 }

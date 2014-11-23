@@ -37,13 +37,13 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public int getIdByName(String user) {
-        User result = getUserByName(user);
+        User result = getUserByLogin(user);
         return result != null ? result.getId() : 0;
     }
 
 
     @Override
-    public User getUserByName(String user) {
+    public User getUserByLogin(String user) {
         String query = "SELECT * FROM LIB_USER WHERE LOGIN = '" + user + "'";
         try {
             PreparedStatement statement = DBManager.getConnection().prepareStatement(query);

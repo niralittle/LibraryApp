@@ -5,5 +5,5 @@ import shared.model.vo.User;
 public interface UserDAO extends DAO<User> {
 
     int getIdByName(String user);
-    User getUserByName(String user);
+    User getUserByLogin(String user);
 }

@@ -8,8 +8,8 @@ import java.io.IOException;
 public class SecurityCheckOnClient {
 
     public static Result ifUserExists(String username, String password) throws IOException {
-        ConnectionEstablisher.connect();
-        return ConnectionEstablisher.executeLoginAttempt(username, password);
+        SocketConnectionEstablisher.connect();
+        return SocketConnectionEstablisher.executeLoginAttempt(username, password);
     }
 
     static class Result {
