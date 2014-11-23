@@ -13,7 +13,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getByQuery(int page, int size, Map<String, String> params) {
+    public List<User> getByQuery(Map<String, String> params) {
         return null;
     }
 

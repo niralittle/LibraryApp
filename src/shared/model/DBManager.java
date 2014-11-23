@@ -6,9 +6,7 @@ import java.sql.*;
  */
 public class DBManager {
 
-    final static String derbyProtocol = "jdbc:derby://localhost:1527/";
-    final static String dbName = "Library";
-    final static String jdbcURL = derbyProtocol + dbName;
+    final static String jdbcURL = "jdbc:derby://localhost:1527/Library";
     final static String derbyDriver = "org.apache.derby.jdbc.ClientDriver";
 
     private static volatile Connection conn;
@@ -25,7 +23,7 @@ public class DBManager {
     private static void establish() {
         System.setProperty("jdbc.drivers", derbyDriver);
         try {
-            conn = DriverManager.getConnection(jdbcURL, "app", "root");
+            conn = DriverManager.getConnection(jdbcURL);
         } catch (SQLException se) {
             System.out.println("Connection failed: " + se);
         }

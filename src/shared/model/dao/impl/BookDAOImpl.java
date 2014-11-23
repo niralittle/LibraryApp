@@ -4,6 +4,7 @@ import shared.model.DBManager;
 import shared.model.dao.DAO;
 import shared.model.vo.Book;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -38,12 +39,11 @@ public class BookDAOImpl implements DAO<Book> {
         }
     }
 
-    public List<Book> getByQuery(int page, int size, Map<String, String> params) {
+    public List<Book> getByQuery(Map<String, String> params) {
         StringBuilder query = new StringBuilder();
-        query.append("\t SELECT * \n\t FROM ");
-        query.append(params.get("from")).append(" WHERE ");
+        query.append("SELECT * FROM BOOK");
 
-        if (!params.isEmpty()) {
+        if (params != null && !params.isEmpty()) {
             query.append(" WHERE ");
             boolean notFirst = false; //not adding " AND " before the first param
             for (Map.Entry<String, String> entry : params.entrySet()) {
@@ -58,8 +58,8 @@ public class BookDAOImpl implements DAO<Book> {
         }
         ResultSet rs;
         try {
-            Statement statement = DBManager.getConnection().prepareStatement(query.toString());
-            rs = statement.executeQuery(query.toString());
+            PreparedStatement statement = DBManager.getConnection().prepareStatement(query.toString());
+            rs = statement.executeQuery();
             List<Book> result = new LinkedList<>();
             while (rs.next()) {
                 Book book = new Book();
@@ -72,7 +72,7 @@ public class BookDAOImpl implements DAO<Book> {
                 book.setCategory(rs.getString(7));
                 result.add(book);
             }
-            statement.close();
+            rs.close();
             return result;
         } catch (SQLException se) {
             System.out.println("SQL Error: " + se);

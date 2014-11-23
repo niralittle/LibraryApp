@@ -1,6 +1,7 @@
 package controller.client;
 
 import shared.model.dao.UserDAO;
+import shared.model.dao.impl.BookDAOImpl;
 import shared.model.dao.impl.UserDAOImpl;
 import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
@@ -36,9 +37,10 @@ public abstract class BookCatalog {
     public static List<Book> getAllBooks() {
         Map<String, Object> request = new HashMap<>();
         request.put("method", GET_ALL_BOOKS);
-        try {
-            return (List<Book>) ConnectionEstablisher.retrieveOnRequest(request).getParams().get("methodResult");
-        } catch (Exception e) {
+        //try {
+            return new BookDAOImpl().getByQuery(null);
+            //return (List<Book>) ConnectionEstablisher.retrieveOnRequest(request).getParams().get("methodResult");
+        /*} catch (Exception e) {
             List<Book> books = new ArrayList<>();
             Book book1 = new Book();
             book1.setTitle("Title 1");
@@ -53,7 +55,7 @@ public abstract class BookCatalog {
             book3.setAuthors("Author C.");
             books.add(book3);
             return books;
-        }
+        }*/
     }
 
 

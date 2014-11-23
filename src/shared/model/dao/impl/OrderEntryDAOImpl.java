@@ -5,9 +5,11 @@ import shared.model.dao.DAO;
 import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,10 +24,9 @@ public class OrderEntryDAOImpl implements DAO<OrderEntry> {
         return null;
     }
 
-    //TODO: WRONG!
-    public List<OrderEntry> getByQuery(int page, int size, Map<String, String> params) {
+    public List<OrderEntry> getByQuery(Map<String, String> params) {
         StringBuilder query = new StringBuilder();
-        query.append("\t INSERT * \n\t INTO TABLE ORDER_ENTRY( ");
+        query.append("SELECT ID FROM TABLE ORDER_ENTRY ");
 
         if (params != null && !params.isEmpty()) {
             query.append(" WHERE ");
@@ -42,19 +43,11 @@ public class OrderEntryDAOImpl implements DAO<OrderEntry> {
         }
         ResultSet rs;
         try {
-            Statement statement = DBManager.getConnection().prepareStatement(query.toString());
-            rs = statement.executeQuery(query.toString());
+            PreparedStatement statement = DBManager.getConnection().prepareStatement(query.toString());
+            rs = statement.executeQuery();
             List<OrderEntry> result = new LinkedList<>();
             while (rs.next()) {
-                Book book = new Book();
-                book.setId(rs.getInt(1));
-                book.setTitle(rs.getString(2));
-                book.setAuthors(rs.getString(3));
-                book.setDescription(rs.getString(4));
-                book.setRating(rs.getInt(5));
-                book.setNumberOfPages(rs.getInt(6));
-                book.setCategory(rs.getString(7));
-                //result.add(book);
+                result.add(getEntryById(rs.getInt(1)));
             }
             statement.close();
             return result;
@@ -62,5 +55,39 @@ public class OrderEntryDAOImpl implements DAO<OrderEntry> {
             System.out.println("SQL Error: " + se);
             return Collections.emptyList();
         }
+    }
+
+    public OrderEntry getEntryById(int id) {
+        OrderEntry result = new OrderEntry();
+        try {
+            PreparedStatement entity = DBManager.getConnection()
+                    .prepareStatement("SELECT ID, USERID, WAITINGSINCE  FROM ORDER_ENTRY WHERE ID=" + id);
+            ResultSet rs = entity.executeQuery();
+            if (rs.next()) {
+                result.setId(rs.getInt(1));
+                result.setUserId(rs.getInt(2));
+                result.setWaitingSince(rs.getDate(3));
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error: " + e);
+            return null;
+        }
+        BookDAOImpl bookDAO = new BookDAOImpl();
+        List<Book> books = new ArrayList<>();
+        try {
+            PreparedStatement booksStatement = DBManager.getConnection()
+                    .prepareStatement("SELECT BOOKID FROM OE_BOOK WHERE ID=" + id);
+            ResultSet rs = booksStatement.executeQuery();
+            while (rs.next()) {
+                books.add(bookDAO.findById(rs.getInt(1)));
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL Error: " + e);
+            return null;
+        }
+        result.setBooks(books);
+        return result;
     }
 }
