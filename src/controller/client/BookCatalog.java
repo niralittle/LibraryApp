@@ -55,4 +55,7 @@ public abstract class BookCatalog {
     }
 
 
+    public static List<OrderEntry> getAllOrders() {
+        return new OrderEntryDAOImpl().getByQuery(null);
+    }
 }

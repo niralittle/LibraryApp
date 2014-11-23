@@ -7,7 +7,6 @@ import shared.model.vo.Book;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 /**
@@ -17,10 +16,10 @@ public class BookDAOImpl implements DAO<Book> {
 
     @Override
     public Book findById(int id) {
-        String query = "SELECT * FROM TABLE BOOK WHERE ID = " + id;
+        String query = "SELECT * FROM BOOK WHERE ID = " + id;
         try {
-            Statement statement = DBManager.getConnection().prepareStatement(query);
-            ResultSet rs = statement.executeQuery(query);
+            PreparedStatement statement = DBManager.getConnection().prepareStatement(query);
+            ResultSet rs = statement.executeQuery();
             if (rs.next()) {
                 Book b = new Book();
                 b.setId(rs.getInt(1));

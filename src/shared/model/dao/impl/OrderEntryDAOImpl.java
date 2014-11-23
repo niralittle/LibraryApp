@@ -25,7 +25,7 @@ public class OrderEntryDAOImpl implements OrderEntryDAO {
 
     public List<OrderEntry> getByQuery(Map<String, String> params) {
         StringBuilder query = new StringBuilder();
-        query.append("SELECT ID FROM TABLE ORDER_ENTRY ");
+        query.append("SELECT ID FROM ORDER_ENTRY");
 
         if (params != null && !params.isEmpty()) {
             query.append(" WHERE ");
@@ -77,7 +77,7 @@ public class OrderEntryDAOImpl implements OrderEntryDAO {
         List<Book> books = new ArrayList<>();
         try {
             PreparedStatement booksStatement = DBManager.getConnection()
-                    .prepareStatement("SELECT BOOKID FROM OE_BOOK WHERE ID=" + id);
+                    .prepareStatement("SELECT BOOKID FROM OE_BOOK WHERE ENTRYID=" + id);
             ResultSet rs = booksStatement.executeQuery();
             while (rs.next()) {
                 books.add(bookDAO.findById(rs.getInt(1)));

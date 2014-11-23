@@ -3,6 +3,8 @@ package shared.view.desktop;
 import controller.client.BookCatalog;
 import controller.client.LoginController;
 import shared.model.vo.Book;
+import shared.model.vo.OrderEntry;
+import shared.model.vo.User;
 
 import javax.swing.*;
 import java.awt.BorderLayout;
@@ -11,7 +13,6 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -26,19 +27,24 @@ public abstract class MainWindow {
 
             String username = userText.getText();
             String password = new String(passwordText.getPassword());
-            if (LoginController.verifyLoginPassword(username, password)) {
-                placeCatalogComponents();
+            User user = LoginController.getUserObject(username);
+            if (user != null && user.getPassword().equals(password)) {
+                if (user.isAdmin()) {
+                    placeAdminComponents();
+                } else {
+                    placeCatalogComponents();
+                }
                 USER = username;
             } else {
                 JOptionPane.showMessageDialog(view,
                         (username.isEmpty() && password.isEmpty())
-                        ? "Fill all the blanks to proceed"
-                        : "Unsuccessful, please check credentials",
+                                ? "Fill all the blanks to proceed"
+                                : "Unsuccessful, please check credentials",
                         "Error",
                         JOptionPane.ERROR_MESSAGE);
-            }        }
+            }
+        }
     };
-
 
 
     private static JTextField userText;
@@ -98,7 +104,7 @@ public abstract class MainWindow {
         String[] listData = new String[books.size()];
         for (int i = 0; i < listData.length; i++) {
             listData[i] = books.get(i).getTitle() + " (" + books.get(i).getAuthors() + ", "
-                    + books.get(i).getNumberOfPages()+ " pages)";
+                    + books.get(i).getNumberOfPages() + " pages)";
         }
         final JList<String> list = new JList<>(listData);
 
@@ -106,11 +112,11 @@ public abstract class MainWindow {
 
         JPanel topHalf = new JPanel();
         topHalf.setLayout(new BoxLayout(topHalf, BoxLayout.LINE_AXIS));
-        JPanel listContainer = new JPanel(new GridLayout(1,1));
+        JPanel listContainer = new JPanel(new GridLayout(1, 1));
         listContainer.setBorder(BorderFactory.createTitledBorder("List"));
         listContainer.add(listPane);
 
-        topHalf.setBorder(BorderFactory.createEmptyBorder(5,5,0,5));
+        topHalf.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
         topHalf.add(listContainer);
 
         topHalf.setPreferredSize(new Dimension(100, 430));
@@ -149,5 +155,53 @@ public abstract class MainWindow {
                 "Welcome to Library app.",
                 "Welcome",
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private static void placeAdminComponents() {
+        final List<OrderEntry> orders = BookCatalog.getAllOrders();
+
+        view.setVisible(false);
+        view.getContentPane().removeAll();
+        view.setSize(400, 500);
+
+        JPanel panel = new JPanel();
+        view.add(panel);
+        view.setTitle("Book Catalog");
+
+        panel.setLayout(new BorderLayout());
+
+        String[] listData = new String[orders.size()];
+        for (int i = 0; i < listData.length; i++) {
+            listData[i] = String.format("ID: %d, userID: %d, DATE: %s", orders.get(i).getId(),
+                    orders.get(i).getUserId(), orders.get(i).getWaitingSince().toString());
+        }
+        final JList<String> list = new JList<>(listData);
+
+        JScrollPane listPane = new JScrollPane(list);
+
+        JPanel topHalf = new JPanel();
+        topHalf.setLayout(new BoxLayout(topHalf, BoxLayout.LINE_AXIS));
+        JPanel listContainer = new JPanel(new GridLayout(1, 1));
+        listContainer.setBorder(BorderFactory.createTitledBorder("List"));
+        listContainer.add(listPane);
+
+        topHalf.setBorder(BorderFactory.createEmptyBorder(5, 5, 0, 5));
+        topHalf.add(listContainer);
+
+        topHalf.setPreferredSize(new Dimension(100, 250));
+        view.add(topHalf, BorderLayout.NORTH);
+        JTable books = new JTable();
+        books.setBounds(10, 80, 80, 200);
+        panel.add(books);
+        JPanel bottomHalf = new JPanel(new BorderLayout());
+        bottomHalf.setPreferredSize(new Dimension(450, 135));
+
+        view.setVisible(true);
+
+        JOptionPane.showMessageDialog(view,
+                "Welcome to Library app.",
+                "Welcome",
+                JOptionPane.INFORMATION_MESSAGE);
+
     }
 }
