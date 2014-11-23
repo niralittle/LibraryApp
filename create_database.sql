@@ -40,47 +40,47 @@ INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
   VALUES ('Life of Pi ', 'William James', 'The Varieties of Religious Experience was an immediate bestseller upon its publication in June 1902. ', 9, 640, 'A Study in Human Nature');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Up from Slavery', 'Wally Lamb', 'Description ', 9, 456, 'A Study in Human Nature');
+  VALUES ('Up from Slavery', 'Wally Lamb', 'Description ', 9, 456, 'Engineering');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Civil War', 'Anita Diamant', 'Description ', 7, 124, 'A Study in Human Nature');
+  VALUES ('The Civil War', 'Anita Diamant', 'Description ', 7, 124, 'Law');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Guns of August', 'Mitch Albom', 'Description ', 5, 345, 'A Study in Human Nature');
+  VALUES ('The Guns of August', 'Mitch Albom', 'Description ', 5, 345, 'Law');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Souls of Black Folk', 'Marion Zimmer Bradley', 'Description ', 8, 456, 'A Study in Human Nature');
+  VALUES ('The Souls of Black Folk', 'Marion Zimmer Bradley', 'Description ', 8, 456, 'Law');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Ideas And Opinions', 'William James', 'Description ', 6, 1546, 'A Study in Human Nature');
+  VALUES ('Ideas And Opinions', 'William James', 'Description ', 6, 1546, 'Biography');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Eminent Victorians', 'Rowling', 'Description ', 7, 785, 'A Study in Human Nature');
+  VALUES ('Eminent Victorians', 'Rowling', 'Description ', 7, 785, 'Engineering');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Darkness Visible', 'John Irving', 'Description ', 10, 424, 'A Study in Human Nature');
+  VALUES ('Darkness Visible', 'John Irving', 'Description ', 10, 424, 'Children');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Gnostic Gospels', 'Mitch Albom', 'Description ', 5, 145, 'A Study in Human Nature');
+  VALUES ('The Gnostic Gospels', 'Mitch Albom', 'Description ', 5, 145, 'History');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Hobbit', 'Tolkien', 'Description ', 3, 786, 'A Study in Human Nature');
+  VALUES ('The Hobbit', 'Tolkien', 'Description ', 3, 786, 'Biography');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Wuthering Heights', 'William James', 'Description ', 4, 754, 'A Study in Human Nature');
+  VALUES ('Wuthering Heights', 'William James', 'Description ', 4, 754, 'Children');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
   VALUES ('The Notebook', 'Nicholas Sparks', 'Description ', 3, 135, 'A Study in Human Nature');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The English Patient', 'Wally Lamb', 'Description ', 9, 456, 'A Study in Human Nature');
+  VALUES ('The English Patient', 'Wally Lamb', 'Description ', 9, 456, 'Children');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Good Earth', 'Anita Diamant', 'Description ', 7, 124, 'A Study in Human Nature');
+  VALUES ('The Good Earth', 'Anita Diamant', 'Description ', 7, 124, 'Christianity');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Bourne Identity', 'Mitch Albom', 'Description ', 5, 345, 'A Study in Human Nature');
+  VALUES ('The Bourne Identity', 'Mitch Albom', 'Description ', 5, 345, 'Humor');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('In The Skin Of A Lion', 'Marion Zimmer Bradley', 'Description ', 8, 456, 'A Study in Human Nature');
+  VALUES ('In The Skin Of A Lion', 'Marion Zimmer Bradley', 'Description ', 8, 456, 'Humor');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Of Mice And Men', 'William James', 'Description ', 6, 1546, 'A Study in Human Nature');
+  VALUES ('Of Mice And Men', 'William James', 'Description ', 6, 1546, 'Humor');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Not Wanted On The Voyage', 'Rowling', 'Description ', 7, 785, 'A Study in Human Nature');
+  VALUES ('Not Wanted On The Voyage', 'Rowling', 'Description ', 7, 785, 'Travel');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The World According To Garp', 'John Irving', 'Description ', 10, 424, 'A Study in Human Nature');
+  VALUES ('The World According To Garp', 'John Irving', 'Description ', 10, 424, 'Travel');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('Les Miserables', 'Mitch Albom', 'Description ', 5, 145, 'A Study in Human Nature');
+  VALUES ('Les Miserables', 'Mitch Albom', 'Description ', 5, 145, 'History');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('War and Peace', 'Tolstoy', 'Description ', 3, 786, 'A Study in Human Nature');
+  VALUES ('War and Peace', 'Tolstoy', 'Description ', 3, 786, 'Pets');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Fountainhead', 'William James', 'Description ', 4, 754, 'A Study in Human Nature');
+  VALUES ('The Fountainhead', 'William James', 'Description ', 4, 754, 'Pets');
 INSERT INTO BOOK(TITLE, AUTHORS, DESCRIPTION, RATING, NUMBEROFPAGES, CATEGORY)
-  VALUES ('The Thorn Birds', 'Nicholas Sparks', 'Description ', 3, 135, 'A Study in Human Nature');
+  VALUES ('The Thorn Birds', 'Nicholas Sparks', 'Description ', 3, 135, 'Christianity');
 
