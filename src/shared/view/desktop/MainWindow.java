@@ -87,7 +87,7 @@ public abstract class MainWindow {
 
         view.setVisible(false);
         view.getContentPane().removeAll();
-        view.setSize(300, 500);
+        view.setSize(400, 500);
 
         JPanel panel = new JPanel();
         view.add(panel);
@@ -97,7 +97,8 @@ public abstract class MainWindow {
 
         String[] listData = new String[books.size()];
         for (int i = 0; i < listData.length; i++) {
-            listData[i] = books.get(i).getTitle() + " (" + books.get(i).getAuthors() + ")";
+            listData[i] = books.get(i).getTitle() + " (" + books.get(i).getAuthors() + ", "
+                    + books.get(i).getNumberOfPages()+ " pages)";
         }
         final JList<String> list = new JList<>(listData);
 
@@ -114,18 +115,18 @@ public abstract class MainWindow {
 
         topHalf.setPreferredSize(new Dimension(100, 430));
         view.add(topHalf, BorderLayout.NORTH);
-        JButton sendButton = new JButton("Send order for processing");
+        JButton sendButton = new JButton("Send order to processing");
         sendButton.setBounds(10, 80, 80, 25);
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                List<Book> orderedBooks = new ArrayList<>();
-                if (orderedBooks.isEmpty()) {
+                if (list.getSelectedIndices().length == 0) {
                     JOptionPane.showMessageDialog(view,
                             "Select at least one book.",
                             "Warning",
                             JOptionPane.WARNING_MESSAGE);
                 } else {
+                    List<Book> orderedBooks = new ArrayList<>();
                     for (int index : list.getSelectedIndices()) {
                         orderedBooks.add(books.get(index));
                     }
