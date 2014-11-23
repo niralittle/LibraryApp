@@ -32,11 +32,10 @@ public class BookDAOImpl implements DAO<Book> {
                 b.setCategory(rs.getString(7));
                 return b;
             }
-            return null;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            System.out.println("SQL Error: " + e);
         }
+        return null;
     }
 
     public List<Book> getByQuery(Map<String, String> params) {
@@ -62,15 +61,14 @@ public class BookDAOImpl implements DAO<Book> {
             rs = statement.executeQuery();
             List<Book> result = new LinkedList<>();
             while (rs.next()) {
-                Book book = new Book();
-                book.setId(rs.getInt(1));
-                book.setTitle(rs.getString(2));
-                book.setAuthors(rs.getString(3));
-                book.setDescription(rs.getString(4));
-                book.setRating(rs.getInt(5));
-                book.setNumberOfPages(rs.getInt(6));
-                book.setCategory(rs.getString(7));
-                result.add(book);
+                result.add(new Book(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getInt(5),
+                        rs.getInt(6),
+                        rs.getString(7)));
             }
             rs.close();
             return result;

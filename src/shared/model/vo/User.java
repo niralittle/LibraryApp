@@ -9,7 +9,7 @@ public class User extends EntityWithId {
     private String login;
     private String password;
 
-    public User(int id, int isAdmin, String login, String password) {
+    public User(int id, boolean isAdmin, String login, String password) {
         super(id);
         setIsAdmin(isAdmin);
         this.login = login;
@@ -22,8 +22,8 @@ public class User extends EntityWithId {
         return isAdmin;
     }
 
-    public void setIsAdmin(int isAdmin) {
-        this.isAdmin = (1 == isAdmin);
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
     public String getLogin() {

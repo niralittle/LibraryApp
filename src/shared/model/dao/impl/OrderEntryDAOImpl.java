@@ -1,14 +1,13 @@
 package shared.model.dao.impl;
 
 import shared.model.DBManager;
-import shared.model.dao.DAO;
+import shared.model.dao.OrderEntryDAO;
 import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -18,7 +17,7 @@ import java.util.Map;
 /**
  * Created by niralittle on 28.10.2014.
  */
-public class OrderEntryDAOImpl implements DAO<OrderEntry> {
+public class OrderEntryDAOImpl implements OrderEntryDAO {
 
     public OrderEntry findById(int id) {
         return null;
@@ -89,5 +88,41 @@ public class OrderEntryDAOImpl implements DAO<OrderEntry> {
         }
         result.setBooks(books);
         return result;
+    }
+
+    @Override
+    public void createOrder(OrderEntry orderEntry) {
+        int entryId;
+        try {
+            PreparedStatement statement = DBManager.getConnection()
+                    .prepareStatement("INSERT INTO ORDER_ENTRY (USERID, WAITINGSINCE) VALUES (?, CURRENT_DATE)", new String[]{"id"});
+            statement.setInt(1, orderEntry.getUserId());
+            statement.executeUpdate();
+            ResultSet rs = statement.getGeneratedKeys();
+            if(rs.next()) {
+                entryId = rs.getInt(1);
+            } else {
+                System.out.println("Update failed");
+                return;
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.out.println("SQL Error: " + e);
+            return;
+        }
+        for (Book book : orderEntry.getBooks()) {
+            try {
+                PreparedStatement statement = DBManager.getConnection()
+                        .prepareStatement("INSERT INTO OE_BOOK (ENTRYID, BOOKID) VALUES (?, ?)");
+                statement.setInt(1, entryId);
+                statement.setInt(2, book.getId());
+                statement.executeUpdate();
+                statement.close();
+            } catch (SQLException e) {
+                System.out.println("SQL Error: " + e);
+                return;
+            }
+        }
+
     }
 }
