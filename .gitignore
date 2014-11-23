@@ -65,7 +65,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # Derby stuff
-
+Library
 *.log
 **/*.lck
 **/service.properties
