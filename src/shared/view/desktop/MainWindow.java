@@ -7,6 +7,9 @@ import shared.model.vo.OrderEntry;
 import shared.model.vo.User;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -56,6 +59,8 @@ public abstract class MainWindow {
 
     private static void placeLoginComponents() {
         view = new JFrame("Log in to Library");
+        view.setSize(300, 450);
+        view.setLocationRelativeTo(null);
         view.setSize(300, 160);
         view.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -166,7 +171,7 @@ public abstract class MainWindow {
 
         JPanel panel = new JPanel();
         view.add(panel);
-        view.setTitle("Book Catalog");
+        view.setTitle("Orders");
 
         panel.setLayout(new BorderLayout());
 
@@ -176,6 +181,8 @@ public abstract class MainWindow {
                     orders.get(i).getUserId(), orders.get(i).getWaitingSince().toString());
         }
         final JList<String> list = new JList<>(listData);
+        list.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 
         JScrollPane listPane = new JScrollPane(list);
 
@@ -191,8 +198,13 @@ public abstract class MainWindow {
         topHalf.setPreferredSize(new Dimension(100, 250));
         view.add(topHalf, BorderLayout.NORTH);
         JTable books = new JTable();
-        books.setBounds(10, 80, 80, 200);
-        panel.add(books);
+        DefaultTableModel model = new DefaultTableModel();
+        model.setColumnIdentifiers(new String[]{"ID", "Title", "Authors"});
+        model.addRow(new String[]{"", "", ""});
+        books.setModel(model);
+
+
+        panel.add(new JScrollPane(books));
         JPanel bottomHalf = new JPanel(new BorderLayout());
         bottomHalf.setPreferredSize(new Dimension(450, 135));
 
@@ -202,6 +214,35 @@ public abstract class MainWindow {
                 "Welcome to Library app.",
                 "Welcome",
                 JOptionPane.INFORMATION_MESSAGE);
+        list.getSelectionModel().addListSelectionListener(new PrivateListener(orders, books));
 
+
+    }
+
+    private static class PrivateListener implements ListSelectionListener {
+        private List<OrderEntry> orders;
+        private JTable table;
+        public PrivateListener(List<OrderEntry> orders, JTable table) {
+            this.orders = orders;
+            this.table = table;
+        }
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                int index = ((DefaultListSelectionModel) e.getSource()).getAnchorSelectionIndex();
+                DefaultTableModel tableModel = (DefaultTableModel) (table.getModel());
+                while (tableModel.getRowCount() > 0) {
+                    tableModel.removeRow(0);
+                }
+                for (Book book : orders.get(index).getBooks()) {
+                    tableModel.addRow(new Object[]{book.getId(), book.getTitle(), book.getAuthors()});
+                }
+                tableModel.fireTableDataChanged();
+                table.setModel(tableModel);
+                table.repaint();
+
+            }
+        }
     }
 }
