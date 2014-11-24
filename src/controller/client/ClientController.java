@@ -4,14 +4,34 @@ import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 import shared.model.vo.User;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by niralittle on 23.11.2014.
  */
 public abstract class ClientController {
 
-    private static ClientController controller = new SocketClientController();
+    private static ClientController controller;
+    static {
+        Properties prop = new Properties();
+        try (InputStream input = new FileInputStream("Client.properties")) {
+            prop.load(input);
+            switch (prop.getProperty("controller", "")) {
+                case "rmi": controller = new RMIClientController();
+                    break;
+                case "socket": controller = new SocketClientController();
+                    break;
+                default:
+                    break;
+            }
+        } catch (IOException io) {
+            System.err.println("Exception during properties read: " + io.getCause());
+        }
+    }
     //private static ClientController controller = new RMIClientController();
 
     public static ClientController getInstance() {
