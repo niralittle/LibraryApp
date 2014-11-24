@@ -31,8 +31,8 @@ public abstract class MainWindow {
 
             String username = userText.getText();
             String password = new String(passwordText.getPassword());
-            User user = LoginController.getUserObject(username);
-            if (user != null && user.getPassword().equals(password)) {
+            User user = ClientController.getInstance().authorize(username, password);
+            if (user != null) {
                 if (user.isAdmin()) {
                     placeAdminComponents();
                 } else {
