@@ -1,8 +1,8 @@
 package shared.view.desktop;
 
 import controller.client.BookCatalog;
-import controller.client.LoginController;
-import shared.model.vo.Book;
+import controller.client.ClientController;
+ import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 import shared.model.vo.User;
 
@@ -22,16 +22,16 @@ import java.util.List;
  * Created by niralittle on 28.10.2014.
  */
 public abstract class MainWindow {
+
     private static JFrame view;
     private static String USER;
     private static ActionListener loginListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-
             String username = userText.getText();
             String password = new String(passwordText.getPassword());
-            User user = LoginController.getUserObject(username);
-            if (user != null && user.getPassword().equals(password)) {
+            User user = ClientController.getInstance().authorize(username, password);
+            if (user != null) {
                 if (user.isAdmin()) {
                     placeAdminComponents();
                 } else {
