@@ -28,10 +28,11 @@ public abstract class MainWindow {
     private static ActionListener loginListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
+
             String username = userText.getText();
             String password = new String(passwordText.getPassword());
-            User user = ClientController.getInstance().authorize(username, password);
-            if (user != null) {
+            User user = LoginController.getUserObject(username);
+            if (user != null && user.getPassword().equals(password)) {
                 if (user.isAdmin()) {
                     placeAdminComponents();
                 } else {
