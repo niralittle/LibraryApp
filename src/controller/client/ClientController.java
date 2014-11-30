@@ -33,6 +33,7 @@ public abstract class ClientController implements LibraryService, Serializable {
                     break;
             }
         } catch (IOException | NamingException e) {
+            controller = new DBController();
             System.err.println("Exception during properties read: " + e.getCause());
         }
     }

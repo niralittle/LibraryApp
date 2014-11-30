@@ -10,7 +10,6 @@ import shared.model.vo.User;
 import shared.utils.UtilityConstants;
 import shared.utils.PingPong;
 
-import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -35,7 +34,7 @@ public class SocketServerController {
                 break;
             case GET_BOOK_CATALOG:
                 BookDAOImpl bookDAO = new BookDAOImpl();
-                response.addParam(UtilityConstants.BOOKS, (Serializable) bookDAO.getByQuery(null));
+                response.addParam(UtilityConstants.BOOKS, bookDAO.getByQuery(null));
                 break;
             case ADD_ORDER:
                 OrderEntry entry = (OrderEntry) params.get(UtilityConstants.NEW_ENTRY);
@@ -54,7 +53,7 @@ public class SocketServerController {
         return response;
     }
 
-    private static class SecurityCheckOnServer {
+    public static class SecurityCheckOnServer {
         public static User checkCredentials(String login, String password) {
             UserDAO dao = new UserDAOImpl();
             User user = dao.getUserByLogin(login);
