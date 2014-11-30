@@ -15,7 +15,7 @@ public class SocketServer {
     public static void main(String[] args) throws IOException {
 
         if (args.length != 1) {
-            System.err.println("Usage: java KnockKnockServer <port number>");
+            System.err.println("Usage: java SocketServer <port number>");
             System.exit(1);
         }
 
@@ -30,7 +30,9 @@ public class SocketServer {
 
             PingPong.ClientRequest request;
             PingPong.ServerResponse response;
+            System.out.println("Server listening on port: " + portNumber);
             while ((request = (PingPong.ClientRequest) inFromClient.readObject()) != null) {
+                System.out.println("Received a request from client.");
                 if (request.getParams().get(UtilityConstants.BREAK_CONNECTION) != null) {
                     break;
                 }

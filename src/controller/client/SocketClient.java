@@ -3,7 +3,6 @@ import shared.utils.PingPong;
 
 import java.io.*;
 import java.net.Socket;
-import java.nio.channels.SocketChannel;
 
 /**
  * Created by niralittle on 26.10.2014.
@@ -12,8 +11,8 @@ public class SocketClient {
 
     private static boolean isConnectionEstablished = false;
 
-    private static final String HOST = "HOST";
-    private static final int PORT = 4444;
+    private static final String HOST = "localhost";
+    private static final int PORT = 12350;
 
     private static Socket socket;
 
@@ -29,7 +28,8 @@ public class SocketClient {
             try {
                 getConnection();
             } catch (Exception e) {
-                System.out.println("Error while trying to establish connection: " + e.getCause() + " but trying again.");
+                System.out.println("Error while trying to establish connection but trying again.");
+                e.printStackTrace();
             }
         }
     }
@@ -47,20 +47,13 @@ public class SocketClient {
 
         ObjectOutputStream  oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(clientRequest);
-        oos.close();
 
-        SocketChannel sChannel = SocketChannel.open();
-        sChannel.configureBlocking(true);
-        if (sChannel.connect(socket.getLocalSocketAddress())) {
-            ObjectInputStream ois =
-                    new ObjectInputStream(sChannel.socket().getInputStream());
-            try {
-                serverResponse = (PingPong.ServerResponse) ois.readObject();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            System.out.println("Server response to request is: " + serverResponse.getParams());
+        try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
+            serverResponse = (PingPong.ServerResponse) ois.readObject();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
-        return serverResponse;
+        System.out.println("Server response to request is: " + serverResponse.getParams());
+         return serverResponse;
     }
 }

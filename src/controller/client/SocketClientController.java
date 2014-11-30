@@ -18,11 +18,11 @@ public class SocketClientController extends ClientController {
     public User authorize(String login, String password) {
         PingPong.ClientRequest request = new PingPong.ClientRequest();
         PingPong.ServerResponse response = null;
-        request.getParams().put(
+        request.addParam(
                 UtilityConstants.COMMAND,
                 UtilityConstants.Command.CHECK_CREDENTIALS);
-        request.getParams().put(UtilityConstants.LOGIN, login);
-        request.getParams().put(UtilityConstants.PASSWORD, password);
+        request.addParam(UtilityConstants.LOGIN, login);
+        request.addParam(UtilityConstants.PASSWORD, password);
         try {
             response = SocketClient.retrieveOnRequest(request);
         } catch (IOException e) {

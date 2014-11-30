@@ -17,9 +17,9 @@ public abstract class PingPong implements Serializable{
         this.params = params;
     }
 
-    public void addParams(String name, Object value) {
+    public void addParam(String name, Object value) {
         if (params == null) {
-            params = new HashMap<String, Object>();
+            params = new HashMap<>();
         }
         params.put(name, value);
     }

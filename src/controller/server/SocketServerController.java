@@ -30,24 +30,24 @@ public class SocketServerController {
             case 1:
                 String login = (String) params.get(UtilityConstants.LOGIN);
                 String password = (String) params.get(UtilityConstants.PASSWORD);
-                response.getParams().put(UtilityConstants.USER, SecurityCheckOnServer.checkCredentials(login, password));
+                response.addParam(UtilityConstants.USER, SecurityCheckOnServer.checkCredentials(login, password));
                 break;
             case 2:
                 BookDAOImpl bookDAO = new BookDAOImpl();
-                response.getParams().put(UtilityConstants.BOOKS, bookDAO.getByQuery(null));
+                response.addParam(UtilityConstants.BOOKS, bookDAO.getByQuery(null));
                 break;
             case 3:
                 OrderEntry entry = (OrderEntry) params.get(UtilityConstants.NEW_ENTRY);
                 OrderEntryDAO entryDAO = new OrderEntryDAOImpl();
                 entryDAO.createOrder(entry);
-                response.getParams().put(UtilityConstants.SUCCESS, null);
+                response.addParam(UtilityConstants.SUCCESS, null);
                 break;
             case 4:
                 OrderEntryDAO entryDAO1 = new OrderEntryDAOImpl();
-                response.getParams().put(UtilityConstants.ORDERS, entryDAO1.getByQuery(null));
+                response.addParam(UtilityConstants.ORDERS, entryDAO1.getByQuery(null));
                 break;
             default:
-                response.getParams().put(UtilityConstants.ERROR, "Unsupported command");
+                response.addParam(UtilityConstants.ERROR, "Unsupported command");
         }
         return response;
     }
@@ -56,7 +56,7 @@ public class SocketServerController {
         public static User checkCredentials(String login, String password) {
             UserDAO dao = new UserDAOImpl();
             User user = dao.getUserByLogin(login);
-            if (user.getPassword().equals(password)) {
+            if (user != null && user.getPassword().equals(password)) {
                 return user;
             }
             return null;
