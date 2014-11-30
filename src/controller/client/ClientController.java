@@ -1,19 +1,19 @@
 package controller.client;
 
-import shared.model.vo.Book;
-import shared.model.vo.OrderEntry;
-import shared.model.vo.User;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
+import java.io.Serializable;
 import java.util.Properties;
 
 /**
  * Created by niralittle on 23.11.2014.
  */
-public abstract class ClientController {
+public abstract class ClientController implements LibraryService, Serializable {
 
     private static ClientController controller;
     static {
@@ -21,15 +21,16 @@ public abstract class ClientController {
         try (InputStream input = new FileInputStream("Client.properties")) {
             prop.load(input);
             switch (prop.getProperty("controller", "")) {
-                case "rmi": controller = new RMIClientController();
+                case "rmi": Context namingContext = new InitialContext();
+                    controller = (ClientController) namingContext.lookup("rmi:books");
                     break;
                 case "socket": controller = new SocketClientController();
                     break;
                 default: controller = new DBController();
                     break;
             }
-        } catch (IOException io) {
-            System.err.println("Exception during properties read: " + io.getCause());
+        } catch (IOException | NamingException e) {
+            System.err.println("Exception during properties read: " + e.getCause());
         }
     }
 
@@ -37,9 +38,5 @@ public abstract class ClientController {
         return controller;
     }
 
-    public abstract User authorize(String login, String password);
-    public abstract List<Book> getBookCatalogData();
-    public abstract List<OrderEntry> getOEData();
-    public abstract void createNewOrder(OrderEntry oe);
 
 }
