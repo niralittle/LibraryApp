@@ -33,7 +33,7 @@ public class SocketClientController extends ClientController {
             String error = (String) response.getParams().get(UtilityConstants.ERROR);
             if (error != null) {
                 System.out.println("Error during authorization: " + error);
-                authorize(login, password);
+                return null;
             }
             user = (User) response.getParams().get(UtilityConstants.USER);
         }
@@ -42,16 +42,70 @@ public class SocketClientController extends ClientController {
 
     @Override
     public List<Book> getBookCatalogData() {
-        return null;
+        PingPong.ClientRequest request = new PingPong.ClientRequest();
+        PingPong.ServerResponse response = null;
+        request.addParam(
+                UtilityConstants.COMMAND,
+                UtilityConstants.Command.GET_BOOK_CATALOG);
+        try {
+            response = SocketClient.retrieveOnRequest(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Book> books = null;
+        if (response != null) {
+            String error = (String) response.getParams().get(UtilityConstants.ERROR);
+            if (error != null) {
+                System.out.println("Error during catalog retrieving: " + error);
+                return null;
+            }
+            books = (List<Book>) response.getParams().get(UtilityConstants.BOOKS);
+        }
+        return books;
     }
 
     @Override
     public List<OrderEntry> getOEData() {
-        return null;
+        PingPong.ClientRequest request = new PingPong.ClientRequest();
+        PingPong.ServerResponse response = null;
+        request.addParam(
+                UtilityConstants.COMMAND,
+                UtilityConstants.Command.GET_ORDERS);
+        try {
+            response = SocketClient.retrieveOnRequest(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<OrderEntry> orders = null;
+        if (response != null) {
+            String error = (String) response.getParams().get(UtilityConstants.ERROR);
+            if (error != null) {
+                System.out.println("Error during OE retrieving: " + error);
+                return null;
+            }
+            orders = (List<OrderEntry>) response.getParams().get(UtilityConstants.ORDERS);
+        }
+        return orders;
     }
 
     @Override
     public void createNewOrder(OrderEntry oe) {
-
-    }
+        PingPong.ClientRequest request = new PingPong.ClientRequest();
+        PingPong.ServerResponse response = null;
+        request.addParam(
+                UtilityConstants.COMMAND,
+                UtilityConstants.Command.ADD_ORDER);
+        request.addParam(UtilityConstants.NEW_ENTRY, oe);
+        try {
+            response = SocketClient.retrieveOnRequest(request);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+         if (response != null) {
+            String error = (String) response.getParams().get(UtilityConstants.ERROR);
+            if (error != null) {
+                System.out.println("Error during new order creation: " + error);
+             }
+         }
+     }
 }

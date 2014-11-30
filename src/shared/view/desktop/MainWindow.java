@@ -1,8 +1,7 @@
 package shared.view.desktop;
 
-import controller.client.BookCatalog;
 import controller.client.ClientController;
- import shared.model.vo.Book;
+import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 import shared.model.vo.User;
 
@@ -25,6 +24,8 @@ public abstract class MainWindow {
 
     private static JFrame view;
     private static String USER;
+    private static int USER_ID;
+
     private static ActionListener loginListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -33,6 +34,7 @@ public abstract class MainWindow {
             String password = new String(passwordText.getPassword());
             User user = ClientController.getInstance().authorize(username, password);
             if (user != null) {
+                USER_ID = user.getId();
                 if (user.isAdmin()) {
                     placeAdminComponents();
                 } else {
@@ -95,7 +97,7 @@ public abstract class MainWindow {
     }
 
     private static void placeCatalogComponents() {
-        final List<Book> books = BookCatalog.getAllBooks();
+        final List<Book> books = ClientController.getInstance().getBookCatalogData();
 
         view.setVisible(false);
         view.getContentPane().removeAll();
@@ -142,7 +144,10 @@ public abstract class MainWindow {
                     for (int index : list.getSelectedIndices()) {
                         orderedBooks.add(books.get(index));
                     }
-                    BookCatalog.createOrder(orderedBooks, USER);
+                    OrderEntry oe = new OrderEntry();
+                    oe.setUserId(USER_ID);
+                    oe.setBooks(orderedBooks);
+                    ClientController.getInstance().createNewOrder(oe);
                     JOptionPane.showMessageDialog(view,
                             "Order created.",
                             "Order",
@@ -164,7 +169,7 @@ public abstract class MainWindow {
     }
 
     private static void placeAdminComponents() {
-        final List<OrderEntry> orders = BookCatalog.getAllOrders();
+        final List<OrderEntry> orders = ClientController.getInstance().getOEData();
 
         view.setVisible(false);
         view.getContentPane().removeAll();
@@ -215,6 +220,7 @@ public abstract class MainWindow {
                 "Welcome to Library app.",
                 "Welcome",
                 JOptionPane.INFORMATION_MESSAGE);
+
         list.getSelectionModel().addListSelectionListener(new PrivateListener(orders, books));
 
 

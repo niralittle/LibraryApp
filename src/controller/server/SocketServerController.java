@@ -5,11 +5,13 @@ import shared.model.dao.UserDAO;
 import shared.model.dao.impl.BookDAOImpl;
 import shared.model.dao.impl.OrderEntryDAOImpl;
 import shared.model.dao.impl.UserDAOImpl;
+import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 import shared.model.vo.User;
 import shared.utils.UtilityConstants;
 import shared.utils.PingPong;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -34,7 +36,8 @@ public class SocketServerController {
                 break;
             case 2:
                 BookDAOImpl bookDAO = new BookDAOImpl();
-                response.addParam(UtilityConstants.BOOKS, bookDAO.getByQuery(null));
+                List<Book> books = bookDAO.getByQuery(null);
+                response.addParam(UtilityConstants.BOOKS, books);
                 break;
             case 3:
                 OrderEntry entry = (OrderEntry) params.get(UtilityConstants.NEW_ENTRY);

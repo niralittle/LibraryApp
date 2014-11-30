@@ -29,7 +29,7 @@ public class SocketClient {
                 getConnection();
             } catch (Exception e) {
                 System.out.println("Error while trying to establish connection but trying again.");
-                e.printStackTrace();
+                //e.printStackTrace();
             }
         }
     }
@@ -48,12 +48,14 @@ public class SocketClient {
         ObjectOutputStream  oos = new ObjectOutputStream(socket.getOutputStream());
         oos.writeObject(clientRequest);
 
-        try (ObjectInputStream ois = new ObjectInputStream(socket.getInputStream())) {
+        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+        try {
             serverResponse = (PingPong.ServerResponse) ois.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
         System.out.println("Server response to request is: " + serverResponse.getParams());
-         return serverResponse;
+        isConnectionEstablished = false;
+        return serverResponse;
     }
 }
