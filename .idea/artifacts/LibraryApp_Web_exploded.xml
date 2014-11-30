@@ -2,7 +2,6 @@
   <artifact type="exploded-war" name="LibraryApp:Web exploded">
     <output-path>$PROJECT_DIR$/out/artifacts/LibraryApp_Web_exploded</output-path>
     <root id="root">
-      <element id="javaee-facet-resources" facet="LibraryApp/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="LibraryApp" />
@@ -11,6 +10,8 @@
           <element id="library" level="project" name="derbyclient" />
         </element>
       </element>
+      <element id="javaee-facet-resources" facet="LibraryApp/web/Web" />
+      <element id="dir-copy" path="$PROJECT_DIR$/web/assets" />
     </root>
   </artifact>
 </component>

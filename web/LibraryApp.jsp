@@ -19,13 +19,13 @@
     <title>LibraryApp</title>
     <link rel="icon" href="favicon.ico"/>
     <link href='http://fonts.googleapis.com/css?family=PT+Sans+Caption' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
 </head>
 <body>
 <div>
         <div>
             <% if (session.getAttribute(UtilityConstants.USER) == null) { %>
-            <form method="POST" action="./" class="navbar-form navbar-right" role="form">
+            <form method="POST" action="app" class="navbar-form navbar-right" role="form">
                 <div class="form-group">
                     <input required type="text" name="login"  placeholder="User" class="form-control">
                 </div>
@@ -41,10 +41,12 @@
                 if (bookCatalog.isEmpty()) { %>
                     <p>Sorry, but currently there are no books in the library</p>
             <%  } else { %>
+            <form method="post" name="newOrder" action="app">
             <table class='activeInstances table table-striped table-hover'>
                 <thead>
 
                     <tr>
+                        <td>To order</td>
                         <td>Title</td>
                         <td>Authors</td>
                         <td>Category</td>
@@ -56,20 +58,20 @@
 
                 <% for (Book book: bookCatalog) { %>
                 <tbody>
-
                     <tr>
-
-                           <td><%=book.getTitle()%></td>
-                           <td><%=book.getAuthors()%></td>
-                           <td><%=book.getCategory()%></td>
-                           <td><%=book.getDescription()%></td>
-                           <td><%=book.getRating()%></td>
-                           <td><%=book.getNumberOfPages()%></td>
-                       </tr>
+                       <td><input type="checkbox" name="book" value="<%=book.getId()%>"></td>
+                       <td><%=book.getTitle()%></td>
+                       <td><%=book.getAuthors()%></td>
+                       <td><%=book.getCategory()%></td>
+                       <td><%=book.getDescription()%></td>
+                       <td><%=book.getRating()%></td>
+                       <td><%=book.getNumberOfPages()%></td>
+                   </tr>
                 </tbody>
-
                 <% } %>
                 </table>
+                <input type="submit">
+            </form>
                <% } %>
             <% } %>
 
