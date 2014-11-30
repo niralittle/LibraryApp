@@ -15,6 +15,8 @@ public class SocketClient {
     private static final int PORT = 12350;
 
     private static Socket socket;
+    private static ObjectOutputStream oos;
+    private static ObjectInputStream ois;
 
     public static void connect() {
         if (isConnectionEstablished) {
@@ -28,7 +30,7 @@ public class SocketClient {
             try {
                 getConnection();
             } catch (Exception e) {
-                System.out.println("Error while trying to establish connection but trying again.");
+                System.out.println(SocketClient.class.getSimpleName() + ": Error while trying to establish connection but trying again.");
                 //e.printStackTrace();
             }
         }
@@ -36,25 +38,25 @@ public class SocketClient {
 
     public static void getConnection() throws IOException {
         socket = new Socket(HOST, PORT);
-        System.out.println("Connection successfully established");
+        System.out.println(SocketClient.class.getSimpleName() + ": Connection successfully established");
         isConnectionEstablished = true;
+        oos = new ObjectOutputStream(socket.getOutputStream());
+        ois = new ObjectInputStream(socket.getInputStream());
+
     }
 
     public static PingPong.ServerResponse retrieveOnRequest(PingPong.ClientRequest clientRequest)
             throws IOException {
-        connect();
         PingPong.ServerResponse serverResponse = null;
-
-        ObjectOutputStream  oos = new ObjectOutputStream(socket.getOutputStream());
+        if (socket == null) connect();
         oos.writeObject(clientRequest);
 
-        ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
         try {
             serverResponse = (PingPong.ServerResponse) ois.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        System.out.println("Server response to request is: " + serverResponse.getParams());
+        System.out.println(SocketClient.class.getSimpleName() + ": Server response to request is: " + serverResponse.getParams());
         isConnectionEstablished = false;
         return serverResponse;
     }

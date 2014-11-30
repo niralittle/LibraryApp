@@ -32,7 +32,7 @@ public class SocketClientController extends ClientController {
         if (response != null) {
             String error = (String) response.getParams().get(UtilityConstants.ERROR);
             if (error != null) {
-                System.out.println("Error during authorization: " + error);
+                System.out.println(SocketClientController.class.getSimpleName() + ": Error during authorization: " + error);
                 return null;
             }
             user = (User) response.getParams().get(UtilityConstants.USER);
@@ -56,7 +56,7 @@ public class SocketClientController extends ClientController {
         if (response != null) {
             String error = (String) response.getParams().get(UtilityConstants.ERROR);
             if (error != null) {
-                System.out.println("Error during catalog retrieving: " + error);
+                System.out.println(SocketClientController.class.getSimpleName() + ": Error during catalog retrieving: " + error);
                 return null;
             }
             books = (List<Book>) response.getParams().get(UtilityConstants.BOOKS);
@@ -80,7 +80,7 @@ public class SocketClientController extends ClientController {
         if (response != null) {
             String error = (String) response.getParams().get(UtilityConstants.ERROR);
             if (error != null) {
-                System.out.println("Error during OE retrieving: " + error);
+                System.out.println(SocketClientController.class.getSimpleName() + ": Error during OE retrieving: " + error);
                 return null;
             }
             orders = (List<OrderEntry>) response.getParams().get(UtilityConstants.ORDERS);
@@ -104,7 +104,7 @@ public class SocketClientController extends ClientController {
          if (response != null) {
             String error = (String) response.getParams().get(UtilityConstants.ERROR);
             if (error != null) {
-                System.out.println("Error during new order creation: " + error);
+                System.out.println(SocketClientController.class.getSimpleName() + ": Error during new order creation: " + error);
              }
          }
      }

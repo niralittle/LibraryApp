@@ -5,13 +5,12 @@ import shared.model.dao.UserDAO;
 import shared.model.dao.impl.BookDAOImpl;
 import shared.model.dao.impl.OrderEntryDAOImpl;
 import shared.model.dao.impl.UserDAOImpl;
-import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;
 import shared.model.vo.User;
 import shared.utils.UtilityConstants;
 import shared.utils.PingPong;
 
-import java.util.List;
+import java.io.Serializable;
 import java.util.Map;
 
 /**
@@ -23,11 +22,11 @@ public class SocketServerController {
 
 
     public static PingPong.ServerResponse processRequest(PingPong.ClientRequest request) {
-
+        System.out.println(SocketServerController.class.getSimpleName() + ": Started processing request");
         PingPong.ServerResponse response = new PingPong.ServerResponse();
         Map<String, Object> params = request.getParams();
         UtilityConstants.Command requestedCommand = (UtilityConstants.Command) params.get(UtilityConstants.COMMAND);
-
+        System.out.println(SocketServerController.class.getSimpleName() + ": Command: " + requestedCommand.name());
         switch (requestedCommand) {
             case CHECK_CREDENTIALS:
                 String login = (String) params.get(UtilityConstants.LOGIN);
@@ -36,8 +35,7 @@ public class SocketServerController {
                 break;
             case GET_BOOK_CATALOG:
                 BookDAOImpl bookDAO = new BookDAOImpl();
-                List<Book> books = bookDAO.getByQuery(null);
-                response.addParam(UtilityConstants.BOOKS, books);
+                response.addParam(UtilityConstants.BOOKS, (Serializable) bookDAO.getByQuery(null));
                 break;
             case ADD_ORDER:
                 OrderEntry entry = (OrderEntry) params.get(UtilityConstants.NEW_ENTRY);
@@ -52,6 +50,7 @@ public class SocketServerController {
             default:
                 response.addParam(UtilityConstants.ERROR, "Unsupported command");
         }
+        System.out.println(SocketServerController.class.getSimpleName() + ": Finished processing request");
         return response;
     }
 
@@ -66,4 +65,3 @@ public class SocketServerController {
         }
     }
 }
-

@@ -32,7 +32,7 @@ public class BookDAOImpl implements DAO<Book> {
                 return b;
             }
         } catch (SQLException e) {
-            System.out.println("SQL Error: " + e);
+            System.out.println(BookDAOImpl.class.getSimpleName() + ": SQL Error: " + e);
         }
         return null;
     }
@@ -72,7 +72,7 @@ public class BookDAOImpl implements DAO<Book> {
             rs.close();
             return result;
         } catch (SQLException se) {
-            System.out.println("SQL Error: " + se);
+            System.out.println(BookDAOImpl.class.getSimpleName() + ": SQL Error: " + se);
             return Collections.emptyList();
         }
     }

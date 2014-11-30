@@ -51,7 +51,7 @@ public class OrderEntryDAOImpl implements OrderEntryDAO {
             statement.close();
             return result;
         } catch (SQLException se) {
-            System.out.println("SQL Error: " + se);
+            System.out.println(OrderEntryDAOImpl.class.getSimpleName() + ": SQL Error: " + se);
             return Collections.emptyList();
         }
     }
@@ -70,7 +70,7 @@ public class OrderEntryDAOImpl implements OrderEntryDAO {
                 return null;
             }
         } catch (SQLException e) {
-            System.out.println("SQL Error: " + e);
+            System.out.println(OrderEntryDAOImpl.class.getSimpleName() + ": SQL Error: " + e);
             return null;
         }
         BookDAOImpl bookDAO = new BookDAOImpl();
@@ -83,7 +83,7 @@ public class OrderEntryDAOImpl implements OrderEntryDAO {
                 books.add(bookDAO.findById(rs.getInt(1)));
             }
         } catch (SQLException e) {
-            System.out.println("SQL Error: " + e);
+            System.out.println(OrderEntryDAOImpl.class.getSimpleName() + ": SQL Error: " + e);
             return null;
         }
         result.setBooks(books);
@@ -102,12 +102,12 @@ public class OrderEntryDAOImpl implements OrderEntryDAO {
             if(rs.next()) {
                 entryId = rs.getInt(1);
             } else {
-                System.out.println("Update failed");
+                System.out.println(OrderEntryDAOImpl.class.getSimpleName() + ": Update failed");
                 return;
             }
             statement.close();
         } catch (SQLException e) {
-            System.out.println("SQL Error: " + e);
+            System.out.println(OrderEntryDAOImpl.class.getSimpleName() + ": SQL Error: " + e);
             return;
         }
         for (Book book : orderEntry.getBooks()) {
@@ -119,7 +119,7 @@ public class OrderEntryDAOImpl implements OrderEntryDAO {
                 statement.executeUpdate();
                 statement.close();
             } catch (SQLException e) {
-                System.out.println("SQL Error: " + e);
+                System.out.println(OrderEntryDAOImpl.class.getSimpleName() + ": SQL Error: " + e);
                 return;
             }
         }

@@ -30,9 +30,9 @@ public class SocketServer {
 
             PingPong.ClientRequest request;
             PingPong.ServerResponse response;
-            System.out.println("Server listening on port: " + portNumber);
+            System.out.println(SocketServer.class.getSimpleName() + ": Server listening on port: " + portNumber);
             while ((request = (PingPong.ClientRequest) inFromClient.readObject()) != null) {
-                System.out.println("Received a request from client.");
+                System.out.println(SocketServer.class.getSimpleName() + ": Received a request from client.");
                 if (request.getParams().get(UtilityConstants.BREAK_CONNECTION) != null) {
                     break;
                 }
@@ -40,9 +40,9 @@ public class SocketServer {
                 outToClient.writeObject(response);
             }
         } catch (IOException e) {
-            System.out.println("Exception caught when trying to listen on port "
+            System.out.println(SocketServer.class.getSimpleName() + ": Exception caught when trying to listen on port "
                     + portNumber + " or listening for a connection");
-            System.out.println(e.getMessage());
+            System.out.println(SocketServer.class.getSimpleName() + ": " + e.getMessage());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }

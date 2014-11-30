@@ -25,7 +25,7 @@ public class UserDAOImpl implements UserDAO {
                         rs.getString(4));
             }
         } catch (SQLException e) {
-            System.out.println("SQL Error: " + e);
+            System.out.println(UserDAOImpl.class.getSimpleName() + ": SQL Error: " + e);
         }
         return null;
     }
@@ -56,7 +56,7 @@ public class UserDAOImpl implements UserDAO {
                         rs.getString(4));
             }
         } catch (SQLException e) {
-            System.out.println("SQL Error: " + e);
+            System.out.println(UserDAOImpl.class.getSimpleName() + ": SQL Error: " + e);
         }
         return null;
     }

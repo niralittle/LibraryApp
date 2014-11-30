@@ -26,7 +26,7 @@ public class DBManager {
             conn = DriverManager.getConnection(jdbcURL);
             isConnectionEstablished = true;
         } catch (SQLException se) {
-            System.out.println("Connection failed: " + se);
+            System.out.println(DBManager.class.getSimpleName() + ": Connection failed: " + se);
         }
     }
 }
