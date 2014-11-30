@@ -1,5 +1,6 @@
-package controller.client;
+package controller.server;
 
+import controller.client.ClientController;
 import shared.model.dao.impl.BookDAOImpl;
 import shared.model.dao.impl.OrderEntryDAOImpl;
 import shared.model.dao.impl.UserDAOImpl;

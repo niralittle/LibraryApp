@@ -1,6 +1,9 @@
 package controller.client;
 
 
+import controller.server.DBController;
+import controller.LibraryService;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

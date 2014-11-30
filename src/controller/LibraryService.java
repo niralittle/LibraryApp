@@ -1,4 +1,4 @@
-package controller.client;
+package controller;
 
 import shared.model.vo.Book;
 import shared.model.vo.OrderEntry;

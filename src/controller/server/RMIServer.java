@@ -1,7 +1,6 @@
 package controller.server;
 
-import controller.client.DBController;
-import controller.client.LibraryService;
+import controller.LibraryService;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
