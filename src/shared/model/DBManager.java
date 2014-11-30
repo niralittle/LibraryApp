@@ -24,6 +24,7 @@ public class DBManager {
         System.setProperty("jdbc.drivers", derbyDriver);
         try {
             conn = DriverManager.getConnection(jdbcURL);
+            isConnectionEstablished = true;
         } catch (SQLException se) {
             System.out.println("Connection failed: " + se);
         }

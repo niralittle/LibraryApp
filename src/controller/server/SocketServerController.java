@@ -26,26 +26,26 @@ public class SocketServerController {
 
         PingPong.ServerResponse response = new PingPong.ServerResponse();
         Map<String, Object> params = request.getParams();
-        int requestedAction = ((UtilityConstants.Command) params.get(UtilityConstants.COMMAND)).getNumber();
+        UtilityConstants.Command requestedCommand = (UtilityConstants.Command) params.get(UtilityConstants.COMMAND);
 
-        switch (requestedAction) {
-            case 1:
+        switch (requestedCommand) {
+            case CHECK_CREDENTIALS:
                 String login = (String) params.get(UtilityConstants.LOGIN);
                 String password = (String) params.get(UtilityConstants.PASSWORD);
                 response.addParam(UtilityConstants.USER, SecurityCheckOnServer.checkCredentials(login, password));
                 break;
-            case 2:
+            case GET_BOOK_CATALOG:
                 BookDAOImpl bookDAO = new BookDAOImpl();
                 List<Book> books = bookDAO.getByQuery(null);
                 response.addParam(UtilityConstants.BOOKS, books);
                 break;
-            case 3:
+            case ADD_ORDER:
                 OrderEntry entry = (OrderEntry) params.get(UtilityConstants.NEW_ENTRY);
                 OrderEntryDAO entryDAO = new OrderEntryDAOImpl();
                 entryDAO.createOrder(entry);
                 response.addParam(UtilityConstants.SUCCESS, null);
                 break;
-            case 4:
+            case GET_ORDERS:
                 OrderEntryDAO entryDAO1 = new OrderEntryDAOImpl();
                 response.addParam(UtilityConstants.ORDERS, entryDAO1.getByQuery(null));
                 break;
