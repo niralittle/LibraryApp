@@ -25,14 +25,13 @@ public abstract class ClientController {
                     break;
                 case "socket": controller = new SocketClientController();
                     break;
-                default:
+                default: controller = new DBController();
                     break;
             }
         } catch (IOException io) {
             System.err.println("Exception during properties read: " + io.getCause());
         }
     }
-    //private static ClientController controller = new RMIClientController();
 
     public static ClientController getInstance() {
         return controller;
